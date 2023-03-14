@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef IntValueSetter = void Function(int value);
+
 class RangeSelectorTextFormField extends StatelessWidget {
   RangeSelectorTextFormField({
     super.key,
@@ -7,7 +9,7 @@ class RangeSelectorTextFormField extends StatelessWidget {
     required this.intValueSetter,
   });
   String lableText;
-  final void Function(int value) intValueSetter;
+  final IntValueSetter intValueSetter;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -22,6 +24,13 @@ class RangeSelectorTextFormField extends StatelessWidget {
       onSaved: (newValue) => intValueSetter(
         int.parse(newValue ?? ""),
       ),
+      validator: (value) {
+        if (value == null || int.tryParse(value) == null) {
+          return "Must be an integer";
+        } else {
+          return null;
+        }
+      },
     );
   }
 }
