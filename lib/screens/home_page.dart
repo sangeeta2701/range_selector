@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:range_number/screens/randomizer_page.dart';
 
 import '../widget/rangeSelectorForm.dart';
 
@@ -33,6 +34,11 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           if (formKey.currentState!.validate() == true) {
             formKey.currentState!.save();
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => RandomizerPage(
+                      min: _min,
+                      max: _max,
+                    )));
           }
         },
         child: Icon(Icons.arrow_forward),
