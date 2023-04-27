@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:range_number/screens/randomizer_page.dart';
 
 import '../widget/rangeSelectorForm.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _min = 0;
-  int _max = 0;
+class HomePage extends HookWidget {
+  HomePage({Key? key}) : super(key: key);
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final min = useState<int>(0);
+    final max = useState<int>(0);
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Range"),
@@ -24,10 +19,10 @@ class _HomePageState extends State<HomePage> {
       body: RangeSelectorForm(
         formKey: formKey,
         minValueSetter: (int value) {
-          _min = value;
+          min.value = value;
         },
         maxValueSetter: (int value) {
-          _max = value;
+          max.value = value;
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -36,8 +31,8 @@ class _HomePageState extends State<HomePage> {
             formKey.currentState!.save();
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => RandomizerPage(
-                      min: _min,
-                      max: _max,
+                      min: min.value,
+                      max: max.value,
                     )));
           }
         },
@@ -46,3 +41,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+// class _HomePageState extends State<HomePage> {
+//   int _min = 0;
+//   int _max = 0;
+  
+
+  
+// }
